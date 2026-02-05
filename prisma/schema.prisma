@@ -19,10 +19,21 @@ model User {
   phone_number String
   state        String
   city         String
+  orders Order[]
 }
 
 model Order {
   id String @id @default(cuid())
-  user_id Int 
-  user 
+  user_id String 
+  user User @relation(fields:[user_id] , references:[id]) 
+  total_price Int 
+}
+
+model product {
+  id String @id @default(cuid())
+
+}
+
+model order_items {
+  id String @id @default(cuid())
 }
