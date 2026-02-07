@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import bcrypt from "bcrypt";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
+import { NextRequestHint } from "next/dist/server/web/adapter";
 
 export async function POST(request: NextRequest) {
   const { email, password } = await request.json();
@@ -32,20 +33,24 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // توليد JWT
-    const token = jwt.sign(
-      { userId: user.id, email: user.email },
-      process.env.JWT_SECRET!,
-      { expiresIn: "7d" },
-    );
-
-    return NextResponse.json({
-      message: "Login successful",
-      token, // ⚡ هنا نرسل الـ token للعميل
+    const token = jwt.sign({ user_id: user.id }, process.env.JWT_SECRET!, {
+      expiresIn: "1min",
     });
-    
+
+    const res = NextResponse.json({ message: "Login successfuly" });
+
+    res.cookies.set("token", token, {
+      httpOnly: true,
+      maxAge: 60 * 60 * 24 ,
+      path: "/",
+      secure: process.env.NODE_ENV === "production",
+    });
+
+    return res ;
+
   } catch (err) {
     console.error(err);
+
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 },
