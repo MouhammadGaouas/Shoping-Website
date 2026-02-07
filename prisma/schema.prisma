@@ -13,52 +13,9 @@ datasource db {
   provider = "postgresql"
 }
 
-enum UserRole {
-  SELLER
-  CUSTOMER
-  ADMIN
-}
-
 model User {
-  id     BigInt   @id @default(autoincrement())
-  role   UserRole
-  orders Order[]  @relation("CustomerOrders")
-  sales  Order[]  @relation("SellerOrders")
-}
-
-model Order {
-  id         BigInt @id @default(autoincrement())
-  customerId BigInt
-  sellerId   BigInt
-
-  customer User @relation(
-  "CustomerOrders" ,
-  fields: [customerId] ,
-  references id[]
-  )
-
-  seller User @relation(
-  "SellerOrders" ,
-  fields:[sellerId] ,
-  references id[]
-  )
-
-  items OrderItem[]
-
-  @@index([customerId])
-  @@index([sellerId])
-}
-
-model Product {
-  id BigInt @id @default(autoincrement())
-  items OrderItem[]
-}
-
-model OrderItem {
-  id BigInt @id @default(autoincrement())
-  orderId BigInt
-  productId BigInt
-
-  order Order @relation(fields: [orderId], references: [id])
-  product Product @relation(fields: [productId] , references: [id])
+  id String @id @default(cuid())
+  name String 
+  email String @unique
+  password String
 }
