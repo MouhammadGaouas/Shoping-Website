@@ -13,9 +13,28 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Role {
+  USER
+  CELLER
+}
+
 model User {
-  id String @id @default(cuid())
-  name String 
-  email String @unique
+  id       String  @id @default(cuid())
+  name     String
+  email    String  @unique
   password String
+  role     Role    @default(USER)
+  orders   Order[]
+}
+
+model Order {
+  id           String @id @default(cuid())
+  order_number Int    @default(autoincrement())
+  order_id     String
+  user         User   @relation(fields: [order_id], references: [id])
+}
+
+model Order_Items {
+  id String @id @default(cuid())
+  
 }
