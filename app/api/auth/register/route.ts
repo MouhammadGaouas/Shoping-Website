@@ -7,9 +7,9 @@ import bcrypt from "bcrypt";
 
 
 export async function POST(request: NextRequest) {
-  const { name, email, password } = await request.json();
+  const { firstName , lastName , email, password } = await request.json();
 
-  if (!name || !email || !password)
+  if (!firstName || !lastName || !email || !password)
     return NextResponse.json({ message: "Invalide input" });
 
   try {
@@ -29,7 +29,8 @@ export async function POST(request: NextRequest) {
 
     const user = await prisma.user.create({
       data: {
-        name,
+        firstName ,
+        lastName ,
         email,
         password: hashedPassword,
       },
