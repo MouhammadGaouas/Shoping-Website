@@ -1,17 +1,18 @@
-/*
-  Warnings:
+-- CreateEnum
+CREATE TYPE "Role" AS ENUM ('USER', 'SELLER');
 
-  - The primary key for the `User` table will be changed. If it partially fails, the table could be left without primary key constraint.
-  - The `id` column on the `User` table would be dropped and recreated. This will lead to data loss if there is data in the column.
+-- CreateTable
+CREATE TABLE "User" (
+    "id" BIGSERIAL NOT NULL,
+    "role" "Role" NOT NULL DEFAULT 'USER',
+    "firstName" TEXT NOT NULL,
+    "lastName" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "phone_number" TEXT,
 
-*/
--- AlterTable
-ALTER TABLE "User" DROP CONSTRAINT "User_pkey",
-ADD COLUMN     "phone_number" TEXT,
-ADD COLUMN     "role" TEXT,
-DROP COLUMN "id",
-ADD COLUMN     "id" BIGSERIAL NOT NULL,
-ADD CONSTRAINT "User_pkey" PRIMARY KEY ("id");
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "Order" (
@@ -36,6 +37,9 @@ CREATE TABLE "Product" (
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "OrderItem_order_id_product_id_key" ON "OrderItem"("order_id", "product_id");

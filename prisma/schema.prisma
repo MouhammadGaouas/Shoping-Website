@@ -13,29 +13,29 @@ datasource db {
   provider = "postgresql"
 }
 
-
 enum Role {
   USER
   SELLER
 }
 
 model User {
-  id           BigInt   @id @default(autoincrement())
-  role         Role     @default(USER)
-  name         String
-  email        String   @unique
+  id           BigInt  @id @default(autoincrement())
+  role         Role    @default(USER)
+  firstName    String
+  lastName     String
+  email        String  @unique
   password     String
-  phone_number String?
+  phoneNumber String
 
-  orders       Order[]
+  orders Order[]
 }
 
 model Order {
-  id       BigInt @id @default(autoincrement())
-  user_id  BigInt
+  id      BigInt @id @default(autoincrement())
+  user_id BigInt
 
-  user     User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  items    OrderItem[]
+  user  User        @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  items OrderItem[]
 }
 
 model OrderItem {
@@ -43,15 +43,14 @@ model OrderItem {
   order_id   BigInt
   product_id BigInt
 
-  order     Order   @relation(fields: [order_id], references: [id], onDelete: Cascade)
-  product   Product @relation(fields: [product_id], references: [id], onDelete: Cascade)
+  order   Order   @relation(fields: [order_id], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [product_id], references: [id], onDelete: Cascade)
 
   @@unique([order_id, product_id])
 }
 
 model Product {
-  id     BigInt @id @default(autoincrement())
+  id BigInt @id @default(autoincrement())
 
-  items  OrderItem[]
+  items OrderItem[]
 }
-
