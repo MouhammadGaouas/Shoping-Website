@@ -6,7 +6,6 @@ export async function POST(request: NextRequest) {
   const { firstName, lastName, phoneNumber, email, password } =
     await request.json();
 
-  console.log(lastName);
 
   if (!firstName || !lastName || !phoneNumber || !email || !password)
     return NextResponse.json({ message: "Invalide input" }, { status: 500 });
@@ -16,7 +15,6 @@ export async function POST(request: NextRequest) {
       where: { email },
     });
 
-    console.log(423);
 
     if (isExist)
       return NextResponse.json(

@@ -34,15 +34,15 @@ export async function POST(request: NextRequest) {
     }
 
 
-    const token = jwt.sign({ user_id: user.id  }, process.env.JWT_SECRET!, {
-      expiresIn: "15min",
+    const token = jwt.sign({ user_id: user.id.toString()  }, process.env.JWT_SECRET!, {
+      expiresIn: "7d",
     });
 
     const res = NextResponse.json({ message: "Login successfuly" });
 
     res.cookies.set("token", token, {
       httpOnly: true ,
-      maxAge: 60 * 60  ,
+      maxAge: 60 * 60 * 24 * 7 ,
       path: "/" ,
       secure: process.env.NODE_ENV === "production",
     });

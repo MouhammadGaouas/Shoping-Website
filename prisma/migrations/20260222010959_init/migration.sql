@@ -9,9 +9,20 @@ CREATE TABLE "User" (
     "lastName" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "phone_number" TEXT,
+    "phoneNumber" TEXT NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Seller" (
+    "id" BIGSERIAL NOT NULL,
+    "description" TEXT NOT NULL,
+    "city" TEXT NOT NULL,
+    "wilaya" TEXT NOT NULL,
+    "seller_id" BIGINT NOT NULL,
+
+    CONSTRAINT "Seller_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -34,6 +45,9 @@ CREATE TABLE "OrderItem" (
 -- CreateTable
 CREATE TABLE "Product" (
     "id" BIGSERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "quantity" TEXT NOT NULL,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
 );
@@ -42,7 +56,13 @@ CREATE TABLE "Product" (
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Seller_seller_id_key" ON "Seller"("seller_id");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "OrderItem_order_id_product_id_key" ON "OrderItem"("order_id", "product_id");
+
+-- AddForeignKey
+ALTER TABLE "Seller" ADD CONSTRAINT "Seller_seller_id_fkey" FOREIGN KEY ("seller_id") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Order" ADD CONSTRAINT "Order_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
