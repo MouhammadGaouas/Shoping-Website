@@ -13,9 +13,20 @@ export function validateAuthUser(request: NextRequest) {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
 
-    return decoded;
+    return decoded as {
+      id: string,
+      role: string
+    }
+    
   } catch (err) {
     console.error("Invalide token : ", err);
     return null;
+  }
+}
+
+export function requireRole(user: { role: string }, role: 'USER' | 'SELLER') {
+
+  if (!user.role || user.role !== role) {
+    throw new Error("Forbidden")
   }
 }
