@@ -4,7 +4,8 @@
 
 ```
 git clone <project link>
-cd ./Shoping-Website
+cd ./Shopi
 npm install
 npm run dev 
 ```
+
