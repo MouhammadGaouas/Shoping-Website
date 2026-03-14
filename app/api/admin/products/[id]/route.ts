@@ -4,8 +4,8 @@ import { readonlyType } from "better-auth/react";
 
 
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
-    const { id } = params;
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
 
     try {
 

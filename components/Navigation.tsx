@@ -22,7 +22,7 @@ const Navigation = () => {
 
 
   return (
-    <div className='sticky top-0 z-1000 px-6 py-4 w-full flex items-center justify-between backdrop-blur-xs bg-gray-900  shadow-md'>
+    <div className='sticky top-0 z-1000 px-6 py-4 w-full flex items-center justify-between bg-[var(--forground-color)]  shadow-md'>
       <div className='flex items-center justify-between gap-30 w-1/4'>
         <h1 className='text-2xl text-white font-semibold'>Shopi</h1>
         <ul className='flex items-center justify-between w-full gap-10'>
