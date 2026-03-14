@@ -28,7 +28,7 @@ export default function SignInPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
-      <div className="w-full max-w-md bg-white/5 backdrop-blur-lg border border-white/10 p-8 rounded-2xl shadow-2xl">
+      <div className="w-full max-w-md bg-black border  p-8 rounded-2xl shadow-2xl">
 
         <h1 className="text-3xl text-center text-white font-semibold mb-6">
           Welcome Back

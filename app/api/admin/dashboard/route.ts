@@ -4,9 +4,17 @@ import prisma from "@/lib/prisma";
 export async function GET() {
     try {
         const productCount = await prisma.product.count()
-        const allProduct = await prisma.product.findMany()
+        const allProduct = await prisma.product.findMany({
+            select: {
+                id: true ,
+                name: true,
+                price: true,
+                stock: true,
+                description: true,
+            }
+        })
 
-        return NextResponse.json({ count: productCount , products: allProduct}, { status: 200 })
+        return NextResponse.json({ count: productCount, products: allProduct }, { status: 200 })
 
     } catch (err) {
         return NextResponse.json({ message: "internal server error" }, { status: 400 })

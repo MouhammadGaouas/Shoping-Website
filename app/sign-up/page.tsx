@@ -32,7 +32,7 @@ export default function SignUpPage() {
     <div className="flex items-center justify-center min-h-screen">
       
       <main className="w-full max-w-md p-8 space-y-6 
-      backdrop-blur-xl bg-white/5 border border-white/10 
+      backdrop-blur-xl bg-black
       rounded-2xl shadow-2xl text-white">
 
         <h1 className="text-3xl font-bold text-center">

@@ -46,26 +46,3 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET(request: NextRequest) {
-  try {
-    const AllProducts = await prisma.product.findMany({
-      select: {
-        name: true,
-        slug: true,
-        price: true,
-        stock: true,
-        description: true,
-      },
-    });
-
-    if (AllProducts.length === 0)
-      return NextResponse.json({ message: "Stock is empty" }, { status: 404 });
-
-    return NextResponse.json({ products: AllProducts }, { status: 200 });
-  } catch (err) {
-    return NextResponse.json(
-      { message: "Server error", error: err },
-      { status: 500 },
-    );
-  }
-}

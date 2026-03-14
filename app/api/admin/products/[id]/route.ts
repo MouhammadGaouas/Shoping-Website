@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { readonlyType } from "better-auth/react";
 
 
 
@@ -13,13 +12,21 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
             where: { id }
         })
 
-        if (!isDeleted)
-            return NextResponse.json({ message: "Task not deleted" }, { status: 400 })
+        return NextResponse.json({ message: "Task  deleted succesfully." }, { status: 200 })
 
-        return NextResponse.json({ message: "Task  deleted succesfully." }, { status: 201 })
-
-    } catch (err) {
-        return NextResponse.json({ message: "internall server error" }, { status: 400 })
+    } catch (err: any) {
+        if (err.code === "P2025") {
+            return NextResponse.json(
+                { message: "Product not found." },
+                { status: 404 }
+            );
+        }
+        return NextResponse.json({ message: "internall server error" }, { status: 500 })
     }
 
+}
+
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
+    
 }
