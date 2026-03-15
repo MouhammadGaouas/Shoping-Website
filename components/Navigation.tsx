@@ -3,8 +3,21 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession, signOut } from "@/lib/auth-client";
 import { LogOut, ShoppingBag } from 'lucide-react';
+import SlideMenu from "@/components/SlideMenu";
+import { Menu } from 'lucide-react';
 
 const Navigation = () => {
+
+  const [openMenu, setOpenMenu] = useState<boolean>(false)
+
+  function handleCloseMenu() {
+    setOpenMenu(false)
+  }
+
+  function handleOpenMenu() {
+    setOpenMenu(true)
+  }
+
   const { data: session, isPending } = useSession();
   const router = useRouter();
 
@@ -15,7 +28,8 @@ const Navigation = () => {
   }, [isPending, session, router]);
 
   return (
-    <nav className='sticky top-0 z-50 w-full backdrop-blur-lg bg-[var(--forground-color)]/80 border-b border-white/10 shadow-lg'>
+    <nav className='sticky  top-0 z-50 w-full backdrop-blur-lg bg-[var(--forground-color)]/80 border-b border-white/10 shadow-lg'>
+      <SlideMenu onClose={handleCloseMenu} openMenu={openMenu} />
       <div className='max-w-7xl mx-auto px-6 py-4 flex items-center justify-between'>
         <div className='flex items-center gap-12'>
           <button
@@ -65,14 +79,17 @@ const Navigation = () => {
               </button>
             </>
           ) : (
+
             <button
               onClick={() => signOut()}
-              className='px-5 py-2.5 bg-red-500/10 border border-red-500/20 text-red-400 font-medium rounded-xl hover:bg-red-500/20 transition-all duration-200 flex items-center gap-2'
+              className='px-5 py-2.5 bg-red-500/10 border border-red-500/20 text-red-400 font-medium rounded-xl hover:bg-red-500/20 transition-all duration-200  items-center gap-2 md:flex hidden'
             >
               <LogOut className='w-4 h-4' />
               Sign Out
             </button>
           )}
+
+          <Menu onClick={handleOpenMenu} className='text-white md:hidden block' size={30} />
         </div>
       </div>
     </nav>
