@@ -32,13 +32,17 @@ export default function Stock() {
     handleFetchProducts()
   }, [])
 
+  async function handleDelete(id : string) {
+    console.log("hhhhhhhhhhhhhhhhhh")
+  }
+
   return (
     <div className='flex items-center justify-center'>
       <div className='grid grid-cols-4'>
         {
           products ?
             products.map((val, index) => {
-              return <ProductCard key={index} {...val}  />
+              return <ProductCard key={index} onDelete = {handleDelete} {...val} />
             })
             : <div className='text-white text-center text-3xl'>The Stock in Empty</div>
         }

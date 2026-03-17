@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
                 name: true,
                 price: true,
                 stock: true,
-                description: true,
+                description: true ,
             },
             orderBy: {
                 id: "desc",
