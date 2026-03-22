@@ -1,34 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSessionCookie } from "better-auth/cookies";
+import { auth } from "@/lib/auth";
 
-export function proxy (request : NextRequest) {
-    const session = getSessionCookie(request)
-
-    // check if user is in a auth page
-    const isAuthPage = 
+export async function proxy(request: NextRequest) {
+  const session = await auth.api.getSession({ headers: request.headers });
+  
+  // check if user is in a auth page
+  const isAuthPage =
     request.nextUrl.pathname.startsWith("/sign-in") ||
-    request.nextUrl.pathname.startsWith("/sign-up")
+    request.nextUrl.pathname.startsWith("/sign-up");
 
-    
-    const isDashboard = request.nextUrl.pathname.startsWith("/dashboard")
+  const isDashboard = request.nextUrl.pathname.startsWith("/dashboard");
 
-    console.log("Session:", session, "Path:", request.nextUrl.pathname)
+  console.log("Session:", session, "Path:", request.nextUrl.pathname);
 
-    //if user in dashboard and not authenticated
-    if(!session && isDashboard)
-        return NextResponse.redirect(new URL("/sign-in" , request.url))
+  //if user in dashboard and not authenticated
+  if (!session && isDashboard)
+    return NextResponse.redirect(new URL("/sign-in", request.url));
 
-    //if user is authenticated and in  auth page
-    if(session && isAuthPage)
-        return NextResponse.redirect(new URL("/dashboard" , request.url))
+  //if user is authenticated and in  auth page
+  if (session && isAuthPage)
+    return NextResponse.redirect(new URL("/dashboard", request.url));
 
-    return NextResponse.next()
+  return NextResponse.next();
 }
 
 export const config = {
-    matcher:[
-        "/dashboard/:path*",
-        "/sign-in" ,
-        "/sign-up"
-    ]
-}
+  matcher: ["/dashboard/:path*", "/sign-in", "/sign-up"],
+};
