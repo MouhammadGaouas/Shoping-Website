@@ -1,5 +1,6 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import { useSession } from "@/lib/auth-client";
 import { Package, TrendingUp, DollarSign } from 'lucide-react';
 import { useEffect, useState } from "react";
 import CreateProductForm from "../../components/CreateProductForm";
@@ -7,8 +8,22 @@ import CreateProductForm from "../../components/CreateProductForm";
 
 export default function DashboardPage() {
 
+  const { data: session, isPending } = useSession();
+  const router = useRouter()
+  
+
+
+  useEffect(() => {
+    console.log(session)
+    if(!session || session.user.role !== "ADMIN") 
+      router.push("/")
+
+  }, [session, router, isPending])
+
+
+
   const [count, setCount] = useState<number>(0)
-  const [products , setProducts] = useState([]);
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState<boolean>(true)
   const [showCreateForm, setShowCreateForm] = useState<boolean>(false)
 
@@ -22,7 +37,6 @@ export default function DashboardPage() {
 
         setCount(data.count)
         setProducts(data.products)
-
         console.log(data)
       } else {
         setLoading(true)
@@ -33,7 +47,7 @@ export default function DashboardPage() {
 
     handleFetch()
 
-  },[])
+  }, [])
 
   const handleProductCreated = () => {
     setLoading(true);
@@ -51,8 +65,6 @@ export default function DashboardPage() {
     }
     handleFetch()
   }
-
-  const router = useRouter();
 
   const stats = [
     {
