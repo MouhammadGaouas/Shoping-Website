@@ -4,11 +4,12 @@ import { Package, TrendingUp, DollarSign } from 'lucide-react';
 import { useEffect, useState } from "react";
 import CreateProductForm from "../../components/CreateProductForm";
 
-
 export default function DashboardPage() {
 
+
+
   const [count, setCount] = useState<number>(0)
-  const [products , setProducts] = useState([]);
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState<boolean>(true)
   const [showCreateForm, setShowCreateForm] = useState<boolean>(false)
 
@@ -33,7 +34,7 @@ export default function DashboardPage() {
 
     handleFetch()
 
-  },[])
+  }, [])
 
   const handleProductCreated = () => {
     setLoading(true);

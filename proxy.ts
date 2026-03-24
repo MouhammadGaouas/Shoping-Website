@@ -3,6 +3,7 @@ import { auth } from "@/lib/auth";
 
 export async function proxy(request: NextRequest) {
   const session = await auth.api.getSession({ headers: request.headers });
+  const role = session?.user.role ;
   
   // check if user is in a auth page
   const isAuthPage =

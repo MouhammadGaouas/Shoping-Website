@@ -3,20 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession, signOut } from "@/lib/auth-client";
 import { LogOut, ShoppingBag } from 'lucide-react';
-import SlideMenu from "@/components/SlideMenu";
-import { Menu } from 'lucide-react';
+
 
 const Navigation = () => {
 
-  const [openMenu, setOpenMenu] = useState<boolean>(false)
 
-  function handleCloseMenu() {
-    setOpenMenu(false)
-  }
-
-  function handleOpenMenu() {
-    setOpenMenu(true)
-  }
 
   const { data: session, isPending } = useSession();
   const router = useRouter();
@@ -29,7 +20,6 @@ const Navigation = () => {
 
   return (
     <nav className='sticky  top-0 z-50 w-full backdrop-blur-lg bg-[var(--forground-color)]/80 border-b border-white/10 shadow-lg'>
-      <SlideMenu onClose={handleCloseMenu} openMenu={openMenu} />
       <div className='max-w-7xl mx-auto px-6 py-4 flex items-center justify-between'>
         <div className='flex items-center gap-12'>
           <button
@@ -89,7 +79,6 @@ const Navigation = () => {
             </button>
           )}
 
-          <Menu onClick={handleOpenMenu} className='text-white md:hidden block' size={30} />
         </div>
       </div>
     </nav>

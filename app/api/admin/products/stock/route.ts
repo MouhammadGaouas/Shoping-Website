@@ -4,7 +4,7 @@ import { requireRole, getSession } from "@/lib/session";
 
 export async function GET(request: NextRequest) {
   try {
-    const isAuth = await requireRole(request, ["ADMIN"]);
+    await requireRole(request, ["CUSTOMER" , "ADMIN"]);
 
     const products = await prisma.product.findMany({
       select: {
