@@ -3,8 +3,8 @@ import { auth } from "@/lib/auth";
 
 export async function proxy(request: NextRequest) {
   const session = await auth.api.getSession({ headers: request.headers });
-  const role = session?.user.role ;
-  
+  const role = session?.user.role;
+
   // check if user is in a auth page
   const isAuthPage =
     request.nextUrl.pathname.startsWith("/sign-in") ||
@@ -19,11 +19,13 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/sign-in", request.url));
 
   //if user is authenticated and in  auth page
-  if (session && isAuthPage && session.user.role === "ADMIN")
-      return NextResponse.redirect(new URL("/dashboard" , request.url))
-  else return NextResponse.redirect(new URL("/", request.url))
+  if (session && isAuthPage)
+    return NextResponse.redirect(new URL("/", request.url));
 
-  
+  if (session && isDashboard && session.user.role !== "ADMIN") {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
   return NextResponse.next();
 }
 
