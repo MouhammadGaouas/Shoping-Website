@@ -1,12 +1,17 @@
 "use client";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession, signOut } from "@/lib/auth-client";
+import { ShoppingCart } from 'lucide-react';
+import { Pencil } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
 import { LogOut, ShoppingBag } from 'lucide-react';
 
 
 const Navigation = () => {
 
+  const [open , setOpen] = useState<boolean>(false)
+  const ref = useRef()
 
 
   const { data: session, isPending } = useSession();
@@ -49,7 +54,7 @@ const Navigation = () => {
                     className='hover:bg-white/10 px-4 py-2 rounded-lg font-medium text-gray-300 hover:text-white transition-all duration-200'
                   >
                     Dashboard
-                  </button>  : null
+                  </button> : null
               }
             </li>
           </ul>
@@ -75,7 +80,24 @@ const Navigation = () => {
               Sign Out
             </button>
           )}
+          <div className='relative'>
+            <button className='flex justify-between items-center gap-2 bg-amber-50 px-4 py-2 rounded-lg font-semibold text-lg'>
+              My Cart
+              <ShoppingCart />
+            </button>
+            {/* Cart */}
+            <div ref={ref} className='absolute right-0 top-18 h-70 w-80 bg-white rounded-xl px-4 py-2 font-medium'>
+              <p className='text-xl'>My Cart : </p>
+              <div className='my-2 flex items-center justify-between'>
+                <button className='text-medium'>HeadPhones P51 </button>
+                <div className='flex items-center justify-center gap-2 '>
+                  <Pencil />
+                  <Trash2 />
+                </div>
+              </div>
+            </div>
 
+          </div>
         </div>
       </div>
     </nav>

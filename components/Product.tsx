@@ -12,7 +12,7 @@ interface Product {
 
 export default function Product({ id, name, price, stock, image}: Product) {
     return (
-        <div className='bg-[var(--card-background)] shadow-[var(--main-shadow)] p-4 rounded-xl w-90'>
+        <div className='bg-[var(--card-background)] shadow-[var(--main-shadow)] p-4 mou rounded-xl w-90'>
             <div className='relative rounded-xl h-70 overflow-hidden'>
                 <img className='w-full h-full object-cover' src={image} alt="" />
             </div>
@@ -22,7 +22,7 @@ export default function Product({ id, name, price, stock, image}: Product) {
                     <p className='font-semibold text-yellow-500 text-2xl'>${price}</p>
                 </div>
                 <div className='mt-2'>
-                    <p className='text-white'>in Stock : {stock}</p>
+                    <p className='text-white'>Available : {stock}</p>
                 </div>
                 <div className='flex justify-between items-center gap-6 mt-4'>
                     <button className='flex-1 bg-black px-6 py-1 rounded-sm text-white text-lg'>add to Cart</button>
